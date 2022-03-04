@@ -21,14 +21,9 @@ public class PersonService {
     }
 
     public MessageResponseDTO createPerson(PersonDTO personDTO) {
-        Person personToSave = Person.builder()
-                .firstName(personDTO.getFirstName())
-                .lastName(personDTO.getLastName())
-                .birthDate(personDTO.getBirthDate())
-                .phones(personDTO.getPhones())
-                .build();
+        Person personToSave = personMapper.toModel(personDTO);
 
-        Person savedPerson = personRepository.save(personDTO);
+        Person savedPerson = personRepository.save(personToSave);
         return MessageResponseDTO
                 .builder()
                 .message("Created person with ID" + savedPerson.getId())
